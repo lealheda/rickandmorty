@@ -4,15 +4,12 @@
     $page_limit = 0;
     if(isset($_REQUEST['page'])) {
         $page = $_REQUEST['page'];
-    } else {
-        print("Empty");
-    }  
+    } 
     $url = "https://rickandmortyapi.com/api/character/?page=" . $page;
     $objResultSet = CallAPI("GET", $url);
     if(!empty($objResultSet->info)) {
         $page_limit = $objResultSet->info->pages;
     }
-    //var_dump($objResultSet)
 ?>
 
 <body>

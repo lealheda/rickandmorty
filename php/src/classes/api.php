@@ -1,7 +1,6 @@
 <?php
     function CallAPI($method, $url)
     {
-        
         $curl = curl_init();
         $output = new stdClass();
         $output->results = [];
@@ -18,7 +17,6 @@
             break;
 
         }
-
         return $output;
     }
 ?>
