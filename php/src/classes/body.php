@@ -2,6 +2,7 @@
     include("api.php");
     $page = 1;
     $page_limit = 0;
+    $error_found = true;
     if(isset($_REQUEST['page'])) {
         $page = $_REQUEST['page'];
     } 
@@ -9,6 +10,7 @@
     $objResultSet = CallAPI("GET", $url);
     if(!empty($objResultSet->info)) {
         $page_limit = $objResultSet->info->pages;
+        $error_found = false;
     }
 ?>
 
@@ -16,7 +18,8 @@
 <div class="container-fluid px-4">
         <div class="row">
             <?php
-                foreach($objResultSet->results as $item) {
+                if(!$error_found) {
+                    foreach($objResultSet->results as $item) {
             ?>
             <div class="col-xl-3 col-md-6">
                 <div class="card mb-4 shadow-sm" style="width: 18rem;">
@@ -46,14 +49,16 @@
                 </div>
             </div>
             <?php
+                    }
                 }
             ?>
         </div>
-        <div class="container-fluid px-4">
+        <div class=
+        "container-fluid px-4">
             <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <?php
-                    if($page!=1) {
+                    if($page!=1 && $page<=$page_limit) {
                 ?>
                     <li class="page-item">
                     <a class="page-link" href="?page=<?= $page-1; ?>" aria-label="Previous">
